@@ -9,10 +9,11 @@ import Link from "@material-ui/core/Link";
 import Grid from "@material-ui/core/Grid";
 import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import Typography from "@material-ui/core/Typography";
-import { makeStyles, withStyles } from "@material-ui/core/styles";
+import { withStyles, Theme } from "@material-ui/core/styles";
+import { Styles } from "@material-ui/styles";
 import Container from "@material-ui/core/Container";
 
-const styles = makeStyles((theme) => ({
+const styles: Styles<Theme, {}, string> = (theme: Theme) => ({
   paper: {
     marginTop: theme.spacing(8),
     display: "flex",
@@ -31,12 +32,14 @@ const styles = makeStyles((theme) => ({
   submit: {
     margin: theme.spacing(3, 0, 2),
   },
-}));
+});
 
-class LoginPage extends React.Component {
+interface IProps {
+    classes?: any;
+}
+  
+class LoginPage extends React.Component<IProps, any> {
   render() {
-    // Next line is first problem - I get :
-    // **"Property 'classes' does not exist on type 'Readonly<{}> & Readonly<{ children?: ReactNode; }>'.ts(2339)"**
     const { classes } = this.props;
     return (
       <Container component="main" maxWidth="xs">
@@ -103,12 +106,4 @@ class LoginPage extends React.Component {
   }
 }
 
-// 'styles' here produces a
-/*
-Argument of type '(props?: any) => Record<"paper" | "avatar" | "form" | "submit", string>' is not assignable to parameter of type 'Styles<Theme, {}, "paper" | "avatar" | "form" | "submit">'.
-  Type '(props?: any) => Record<"paper" | "avatar" | "form" | "submit", string>' is not assignable to type 'StyleRulesCallback<Theme, {}, "paper" | "avatar" | "form" | "submit">'.
-    Call signature return types 'Record<"paper" | "avatar" | "form" | "submit", string>' and 'Record<"paper" | "avatar" | "form" | "submit", CSSProperties | CreateCSSProperties<{}> | PropsFunc<{}, CreateCSSProperties<{}>>>' are incompatible.
-      The types of 'paper' are incompatible between these types.
-        Type 'string' is not assignable to type 'CSSProperties | CreateCSSProperties<{}> | PropsFunc<{}, CreateCSSProperties<{}>>'.ts(2345)
-*/
 export default withStyles(styles)(LoginPage);
